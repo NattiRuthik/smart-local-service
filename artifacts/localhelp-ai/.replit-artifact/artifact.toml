@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "LocalHelp AI"
+description = "An interactive India-focused local services and roadside assistance prototype that helps customers understand problems, complete optional safety checks, compare demo providers, and explicitly share location for a service request."
+version = "1.0.0"
+id = "artifacts/localhelp-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18771
+
+[services.development]
+run = "pnpm --filter @workspace/localhelp-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/localhelp-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/localhelp-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18771"
+BASE_PATH = "/"
